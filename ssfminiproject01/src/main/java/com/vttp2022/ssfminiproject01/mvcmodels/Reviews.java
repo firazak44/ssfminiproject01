@@ -47,4 +47,7 @@ public class Reviews {
         rv.numResults = o.getString("num_results");
         return rv;
     }
+    public static Reviews createJson(String body) {
+        return null;
+    }
 }
