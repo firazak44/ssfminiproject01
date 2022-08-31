@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Searchlist Book Review</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Index Searchlist Book Review</h1>
+            </div>
+        </div>
+        <label class="form-label">Results</label>
+        <div class="row">
+            <div class="col">
+                <span data-th-text="${isbn}">&nbsp;</span><p data-th-text="${results.isbn}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <span data-th-text="${title}">&nbsp;</span><p data-th-text="${results.title}"></p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <span data-th-text="${author}">&nbsp;</span><p data-th-text="${results.author}"></p>
+            </div>
+        </div>
+
+        <form method="GET" action="/">
+            <button type="submit" class="btn btn-warning btn-lg">Back</button>
+        </form>
+    </div>
+</body>
+</html>

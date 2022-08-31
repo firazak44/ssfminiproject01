@@ -2,6 +2,7 @@ package com.vttp2022.ssfminiproject01.mvcmodels;
 
 import java.util.Random;
 
+import jakarta.json.Json;
 import jakarta.json.JsonObject;
 
 public class Resultsreviews {
@@ -11,6 +12,7 @@ public class Resultsreviews {
     private String bookauthor;
     private String summary;
     private String isbn13;
+    // private Query query;
 
     public String getUrl() {return url;}
     public void setUrl(String url) {this.url = url;}
@@ -22,6 +24,8 @@ public class Resultsreviews {
     public void setSummary(String summary) {this.summary = summary;}
     public String getIsbn13() {return isbn13;}
     public void setIsbn13(String isbn13) {this.isbn13 = isbn13;}
+    // public Query getQuery() {return query;}
+    // public void setQuery(Query query) {this.query = query;}
 
     public Resultsreviews(){this.isbn13 = this.generateIsbn13(13);}
 
@@ -36,12 +40,21 @@ public class Resultsreviews {
 
     public static Resultsreviews createJson(JsonObject o){
         Resultsreviews rr = new Resultsreviews();
-        rr.url = String.format(o.getString("url"));
-        rr.booktitle = String.format(o.getString("book_title"));
-        rr.bookauthor = String.format(o.getString("book_author"));
-        rr.summary = String.format(o.getString("summary"));
-        rr.isbn13 = String.format(o.getString("isbn13"));
+        rr.setUrl(o.getString("url"));
+        rr.setBooktitle(o.getString("book_title"));
+        rr.setBookauthor(o.getString("book_author"));
+        rr.setSummary(o.getString("summary"));
+        rr.setIsbn13(o.getString("isbn13"));
         return rr;
     }
     
+    public JsonObject toJson(){
+        return Json.createObjectBuilder()
+        .add("url",url)
+        .add("book_title",booktitle)
+        .add("book_author",bookauthor)
+        .add("summary",summary)
+        .add("isbn13",isbn13)
+        .build();
+    }
 }
