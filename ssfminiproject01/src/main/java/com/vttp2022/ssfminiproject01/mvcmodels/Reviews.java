@@ -37,4 +37,6 @@ public class Reviews {
         .add("num_results",numResults)
         .build();
     }
+    public void setIsbn(int isbn) {
+    }
 }

@@ -14,7 +14,7 @@ import com.vttp2022.ssfminiproject01.mvcmodels.Query;
 import com.vttp2022.ssfminiproject01.mvcmodels.Reviews;
 import com.vttp2022.ssfminiproject01.mvcservice.ReviewsSvc;
 
-@RestController
+@Controller
 // @RequestMapping(path="/reviews")
 public class ReviewsCtrl {
     
@@ -22,7 +22,7 @@ public class ReviewsCtrl {
     ReviewsSvc reviewsSvc;
 
     @GetMapping("/reviews")
-    public List<Reviews> exchange(Model model,
+    public String search(Model model,
         @RequestParam int isbn,
         @RequestParam String title,
         @RequestParam String author){
@@ -31,12 +31,11 @@ public class ReviewsCtrl {
         q.setTitle(title);
         q.setAuthor(author);
         List<Reviews> rv = reviewsSvc.getReviews(q);
-        // model.addAttribute("reviewsearch", rv.iterator());
-        model.addAttribute("isbn", q.getIsbn());
-        model.addAttribute("title", q.getTitle());
-        model.addAttribute("author", q.getAuthor());
-        // model.addAttribute("results", rv.get(q));
-        return rv;
-    
+        model.addAttribute("isbn", isbn);
+        model.addAttribute("title", title);
+        model.addAttribute("author", author);
+        model.addAttribute("results", rv);
+        return "indexsearchBR";
     }
+
 }

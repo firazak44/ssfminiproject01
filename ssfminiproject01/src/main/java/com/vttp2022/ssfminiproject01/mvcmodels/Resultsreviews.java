@@ -12,7 +12,6 @@ public class Resultsreviews {
     private String bookauthor;
     private String summary;
     private String isbn13;
-    // private Query query;
 
     public String getUrl() {return url;}
     public void setUrl(String url) {this.url = url;}
@@ -24,9 +23,6 @@ public class Resultsreviews {
     public void setSummary(String summary) {this.summary = summary;}
     public String getIsbn13() {return isbn13;}
     public void setIsbn13(String isbn13) {this.isbn13 = isbn13;}
-    // public Query getQuery() {return query;}
-    // public void setQuery(Query query) {this.query = query;}
-
     public Resultsreviews(){this.isbn13 = this.generateIsbn13(13);}
 
     private synchronized String generateIsbn13(int numChars){

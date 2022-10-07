@@ -14,8 +14,8 @@ public class Redis implements Repo {
     private static final Logger logger = LoggerFactory.getLogger(Redis.class);
     
     @Autowired
-    @Qualifier("books")
-    RedisTemplate<String, Results> redisTemplate;
+    // @Qualifier("books")
+    RedisTemplate<String, Object> redisTemplate;
     
     @Override
     public int save(Results nrs) {
@@ -36,6 +36,7 @@ public class Redis implements Repo {
 
     @Override
     public int update(Results nrs) {
+        
         logger.info("Save results > " + logger);
         if (nrs.isChecksum())
             redisTemplate.opsForValue().setIfAbsent(nrs.getId(), nrs);

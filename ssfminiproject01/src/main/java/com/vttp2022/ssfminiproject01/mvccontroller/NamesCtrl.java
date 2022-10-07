@@ -1,26 +1,28 @@
 package com.vttp2022.ssfminiproject01.mvccontroller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-// import org.springframework.stereotype.Controller;
-// import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.vttp2022.ssfminiproject01.mvcmodels.Names;
+import com.vttp2022.ssfminiproject01.mvcmodels.Results;
 import com.vttp2022.ssfminiproject01.mvcservice.NamesSvc;
 
-@RestController
+@Controller
 public class NamesCtrl {
-    private static final Logger logger = LoggerFactory.getLogger(NamesCtrl.class);
 
     @Autowired
     NamesSvc namesSvc;
 
-    @GetMapping ("/api/lists/names")
-    public Names getNames() throws Exception{
-        logger.info(" " + namesSvc.getNameLists());
-        return namesSvc.getNameLists();
+    @GetMapping ("/lists/names")
+    public String getNames(Model model){
+        List<NamesSvc> bkn = new ArrayList<NamesSvc>();
+        model.addAttribute("bknl", bkn);
+       return "bknList";
     }
+
 }

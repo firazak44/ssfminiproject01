@@ -29,17 +29,18 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private Optional<Integer> redisPort;
 
-    @Value("${spring.redis.password}")
+    // @Value("${spring.redis.password}")
     // private String redisPassword;
-    private String redisPassword = System.getenv("REDIS_API_KEY");
+    // private String redisPassword = System.getenv("REDIS_API_KEY");
 
     @Value("${spring.redis.database}")
     private String redisDatabase;
 
     @Bean(name = "books")
     @Scope("singleton")
-    public RedisTemplate<String, Results> redisTemplate() {
+    public RedisTemplate<String, Object> redisTemplate() {
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        String redisPassword = System.getenv("REDIS_API_KEY");
         config.setHostName(redisHost);
         config.setPort(redisPort.get());
         config.setPassword(redisPassword);
@@ -50,12 +51,12 @@ public class RedisConfig {
         jedisFac.afterPropertiesSet();
 
         logger.info("redis host port > {redisHost} {redisPort}", redisHost, redisPort);
-        RedisTemplate<String, Results> template = new RedisTemplate<String, Results>();
+        RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(jedisFac);
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(jackson2JsonJsonSerializer);
-        template.setHashKeySerializer(template.getKeySerializer());
-        template.setHashValueSerializer(template.getValueSerializer());
+        // template.setHashKeySerializer(template.getKeySerializer());
+        // template.setHashValueSerializer(template.getValueSerializer());
         return template;
     }
 }
