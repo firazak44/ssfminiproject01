@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -29,6 +30,9 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private Optional<Integer> redisPort;
 
+    // @Value("${spring.redis.password}")
+    // private String redisPassword;
+
     @Value("${spring.redis.database}")
     private String redisDatabase;
 
@@ -44,11 +48,14 @@ public class RedisConfig {
 
         final JedisClientConfiguration jedisClient = JedisClientConfiguration.builder().build();
         final JedisConnectionFactory jedisFac = new JedisConnectionFactory(config, jedisClient);
+        // jedisFac.getPoolConfig().setMaxIdle(30);
+        // jedisFac.getPoolConfig().setMinIdle(10);
         jedisFac.afterPropertiesSet();
 
         logger.info("redis host port > {redisHost} {redisPort}", redisHost, redisPort);
         RedisTemplate<String, Object> template = new RedisTemplate<String, Object>();
         template.setConnectionFactory(jedisFac);
+        // template.setDefaultSerializer(new StringRedisSerializer());
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(jackson2JsonJsonSerializer);
         template.setHashKeySerializer(template.getKeySerializer());

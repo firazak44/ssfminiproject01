@@ -8,16 +8,19 @@
         integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
+    <script>src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"</script>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
     <title>Index Login</title>
 </head>
-<body>
-    <div class="container">
-        <div class="row">
+<body class="bg" style="background-image:url(/001.jpg)">
+    <div class="contents">
+        <div class="container">
             <div class="col">
-                <h1>Welcome to the Booklist Tracker </h1>
+                <h1 class="text-center">Welcome to the Booklist Tracker </h1>
                 <form method="get" th:action="@{/index}" th:object="${User}">
-                    <h2>Login to your account</h2>
+                    <h2 class="text-center">Login to your account</h2>
                     <div class="form-outline">
+                        <h2 class="username-text">Username:</h2>
                         <input class="form-control" type="text" name="username" placeholder="Enter Username"/><br>
                       </div>
                     <button class="button" type="submit">Login</button>  

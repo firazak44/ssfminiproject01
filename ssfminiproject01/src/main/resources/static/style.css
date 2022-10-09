@@ -1,0 +1,44 @@
+.bg{
+    background-size:contain;
+    background-position: center;
+    height:200px;
+    width: 100%;
+}
+
+.contents{
+    width: 100%;
+}
+
+.text-center{
+    text-align: center !important;
+}
+
+.form{
+    display: block;
+    margin-top: 0em;
+}
+
+.form-outline{
+    margin-left: auto;
+    margin-bottom: 1em;
+}
+
+.form-control{
+    text-align: center;
+    margin-left: 550px;
+    height: 70%;
+    width: 25%;
+    margin-top: 10px;
+}
+
+.username-text{
+    text-align:center;
+}
+
+.button{
+    height: 100px;
+    width: 25%;
+    margin-top: 10px;
+    margin-left: 550px;
+    text-align: center;
+}

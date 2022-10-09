@@ -8,10 +8,12 @@
         integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
+    <script>src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"</script>
+    <link rel="stylesheet" th:href="@{/style.css}"/>
     <title>Bestsellers Search Results</title>
 </head>
-<body th:object="${user}">
-    <div class="container">
+<body>
+    <div class="container"  th:object="${user}">
         <div class="row">
             <div class="col">
                 <h1>Bestsellers Search Results for: <span th:text="${lookup}"></span></h1>

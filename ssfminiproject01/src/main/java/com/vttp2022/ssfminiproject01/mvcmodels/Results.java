@@ -1,7 +1,5 @@
 package com.vttp2022.ssfminiproject01.mvcmodels;
 
-import java.util.Random;
-
 public class Results {
 
     private String displayName;

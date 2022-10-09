@@ -1,5 +1,9 @@
 package com.vttp2022.ssfminiproject01.mvcservice;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -16,16 +20,24 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.data.redis.core.RedisTemplate;
 import com.vttp2022.ssfminiproject01.mvcmodels.Lists;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+
 @Service
 public class ListsSvc {
     private static final Logger logger = LoggerFactory.getLogger(ListsSvc.class);
-    private static String URL = "https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json" + "?api-key=pjo1HY9s2wXBLV8ftGikAhxH9PdVhlgY";
+    private static String URL = "https://api.nytimes.com/svc/books/v3/lists/best-sellers/history.json";
     // private static final String API_KEY = System.getenv("API_KEY");
-    private CopyOnWriteArrayList<Lists> lists= new CopyOnWriteArrayList<>();
-    private String username;
+    // private CopyOnWriteArrayList<Lists> lists= new CopyOnWriteArrayList<>();
     public String lookup;
+    private String username;
+    public String getUsername() {return username;}
+    public void setUsername(String username) {this.username = username;}
+    @Autowired(required=!true)
+    RedisTemplate<String, Object> template;
 
-    
     @Value("${API_KEY}")
     private String apiKey;
     private boolean hasKey;
@@ -35,28 +47,54 @@ public class ListsSvc {
     logger.info(">>> API KEY set : "  + hasKey);}
 
     //Call Api//
-    public CopyOnWriteArrayList<Lists> getLists(String looKup) {
-        this.lookup = looKup;
-        String nytrvURL = UriComponentsBuilder.fromUriString(URL)
-            .query("title=" + looKup)
-            .query("author=" + looKup)
-            .query("isbn=" + looKup)
-            .query("publisher=" + looKup)
+    public CopyOnWriteArrayList<Lists> getLists(String keywords) {
+    this.lookup = keywords;
+        String nytURL = UriComponentsBuilder.fromUriString(URL)
+            .queryParam("api-key", apiKey)
+            .queryParam("title" , keywords)
             .toUriString();
-        logger.info(">>> Complete NYT URI API address  : "  + nytrvURL);
+        logger.info(">>> Complete NYT URI API address  : "  + nytURL);
         RestTemplate template = new RestTemplate();
-        ResponseEntity<String> respEnt = template.getForEntity(nytrvURL, String.class);
+        ResponseEntity<String> respEnt = null;
         CopyOnWriteArrayList<Lists> lists = new CopyOnWriteArrayList<>();
             try {
-                // respEnt = template.getForEntity(URL, String.class);
-                lists = Lists.createList(respEnt.getBody());
+                respEnt = template.getForEntity(URL, String.class);
+                lists = Lists.createJson(respEnt.getBody());
             } catch (Exception e) {
-                e.printStackTrace();}
-        return lists;  
-    }
+                e.printStackTrace();
+            }
+            return lists;  
+        }
 
-    // @Autowired(required=!true)
-    // RedisTemplate<String, Object> template;
+        // public String getList(){
+        //     Set<String> userList = template.keys("*");
+        //     StringBuilder strB= new StringBuilder();
+        //     for (String username:userList){
+        //         strB.append(username +"\n");
+        //     }
+        //     String list = strB.substring(0, strB.length()-1).toString();
+        //     return list;
+        // }
+    
+    //     String payload = respEnt.getBody();
+    //     Reader strR = new StringReader(payload);
+    //     JsonReader jsR = Json.createReader(strR);
+    //     JsonObject listsRes = jsR.readObject();
+    //     JsonArray listsData = listsRes.getJsonArray("results");
+    //     ArrayList<Lists> list = new ArrayList<>();
+    //     for (int i = 0; i < listsData.size(); i++) {
+    //         JsonObject jo = listsData.getJsonObject(i);
+    //         JsonObject info =jo.getJsonObject("info");
+    //         String title =info.getString("title");
+    //         String author =info.getString("author");
+    //         String description =info.getString("description");
+    //         String contributor =info.getString("contributor");
+    //         String publisher = info.getString("publisher");
+    //         list.addAll(Lists.createList(title,author,description,contributor,publisher));
+    //     }
+    //     return list;  
+    // }
+
     // public String getList(){
     //     Set<String> usernameList = template.keys("*");
     //     StringBuilder stringB= new StringBuilder();

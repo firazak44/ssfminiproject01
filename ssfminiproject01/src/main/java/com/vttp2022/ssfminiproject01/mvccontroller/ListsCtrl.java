@@ -1,8 +1,11 @@
 package com.vttp2022.ssfminiproject01.mvccontroller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +23,8 @@ import com.vttp2022.ssfminiproject01.mvcservice.RedisRepo;
 @RequestMapping("/")
 public class ListsCtrl {
 
+    String lookup;
+
     @Autowired
     User user;
 
@@ -27,32 +32,37 @@ public class ListsCtrl {
     ListsSvc listsSvc;
 
     @Autowired
-    RedisRepo redisrepo;
+    RedisRepo redisRepo;
+
+    @GetMapping("/")
+    public String login(Model model, @RequestParam(required = !true) String userName, HttpSession session){
+        model.addAttribute("username", userName);
+        return "index";
+    }
 
     @GetMapping("/index")
-    public String getToIndex(Model model, @RequestParam(required = !true) String userName){
+    public String getinBSL(Model model, @RequestParam(required = !true) String userName){
         model.addAttribute("username", userName);
         // this.user=userName;
         return "lookupBSL";
     }
 
     @GetMapping("/lists/best-sellers")
-    public String lookupBSL(Model model,@RequestParam(required = !true) String looKup,@RequestParam(required = !true) User username){
-        String lookup = looKup;
+    public String lookupBSL(Model model,@RequestParam(required = !true) String looKup,@RequestParam(required = !true) String username) {
+        lookup = looKup;
         CopyOnWriteArrayList<Lists> lists = listsSvc.getLists(looKup);
-        redisrepo.setLookuplists(lists);
-        user = redisrepo.getUsername(username);
+        redisRepo.setLookuplists(lists);
+        user = redisRepo.getUser(username);
+        // try {
+        //     lists = listsSvc.getLists(looKup);
 
-        model.addAttribute("user", user);
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
+        model.addAttribute("username", username);
         model.addAttribute("lookup", lookup);
         model.addAttribute("results", lists);
         return "lookupBSLres";
     }
-
-    // @GetMapping("/result")
-    // public String getResult(Model model){
-    //     model.addAttribute("username", user);
-    //     return "result";
-    // }
 
 }

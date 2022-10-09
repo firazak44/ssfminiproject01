@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.io.StringReader;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Component;
@@ -88,7 +89,7 @@ public class Lists implements Serializable{
     public String getId() {return id;}
     public void setId(String id) {this.id = id;}
 
-    public static CopyOnWriteArrayList<Lists> createList(String json) throws IOException{
+    public static CopyOnWriteArrayList<Lists> createJson(String json) throws IOException{
         CopyOnWriteArrayList<Lists> lists = new CopyOnWriteArrayList<>();
         try (InputStream is = new ByteArrayInputStream(json.getBytes())) {
             JsonReader r = Json.createReader(is);
@@ -102,23 +103,61 @@ public class Lists implements Serializable{
         }
         return lists;
     }
+// NullPointerException *https://stackoverflow.com/questions/218384/what-is-a-nullpointerexception-and-how-do-i-fix-it
+// The variable can have a default value (and setName can prevent it being set to null):
+// private String name = "";
+// Either the print or printString method can check for null, for example:
+// printString((name == null) ? "" : name);
+    private static Lists createJson(JsonObject ob) {
+        Lists lbkr = new Lists();
+        lbkr.setId(ob.getString("id"));
+        JsonObject ob2 = ob.getJsonObject("info");
+        lbkr.title = (ob2.getString("title") == null) ? "" : ob2.getString("title");
+        lbkr.description = (ob2.getJsonString("description") == null) ? "" : ob2.getString("description");
+        lbkr.contributor = (ob2.getJsonString("contributor") == null) ? "" : ob2.getString("contributor");
+        lbkr.author = (ob2.getJsonString("author") == null) ? "": ob2.getString("author");
+        lbkr.publisher = (ob2.getJsonString("publisher") == null) ? "" : ob2.getString("publisher");
 
-    //tO MITGATE NULL POINTER EXCEPTION ERROR//
-    // printString((name == null) ? "" : name);
-    // book.description = (volumeObject.getJsonString("description") == null) ? null : volumeObject.getString("description");
-    @ModelAttribute
-    public static Lists createJson(JsonObject jol){
-        Lists lbkr = new Lists();  
-        lbkr.setTitle(jol.getString("title"));
-        lbkr.setDescription(jol.getString("description"));
-        lbkr.setContributor(jol.getString("contributor"));
-        lbkr.setAuthor(jol.getString("author"));
-        lbkr.setPublisher(jol.getString("publisher"));
-        lbkr.setBook_review_link(jol.getString("book_review_link"));
-        lbkr.setId(jol.getString("id"));
         return lbkr;
     }
 
+    // public static Lists createJson(String title, String description, String contributor, String author, String publisher){
+    //     Lists lbkr = new Lists();
+    //     lbkr.setTitle(title);
+    //     lbkr.setAuthor(author);
+    //     lbkr.setDescription(description);
+    //     lbkr.setContributor(contributor);
+    //     lbkr.setPublisher(publisher);
+    //     // lbkr.setTitle(jol.getString("title"));
+    //     // lbkr.setDescription(jol.getString("description"));
+    //     // lbkr.setContributor(jol.getString("contributor"));
+    //     // lbkr.setAuthor(jol.getString("author"));
+    //     // lbkr.setPublisher(jol.getString("publisher"));
+    //     return lbkr;
+    // }
 
+    // public static Lists create(JsonObject jo){
+    //     Lists lbkr = new Lists();
+    //     lbkr.setTitle(jo.getString("title"));
+    //     lbkr.setAuthor(jo.getString("author"));
+    //     lbkr.setDescription(jo.getString("description"));
+    //     lbkr.setContributor(jo.getString("contributor"));
+    //     lbkr.setPublisher(jo.getString("publisher"));
+    //     return lbkr;
+    // }
+
+    // public static Lists create(String js) {
+    //     StringReader strR = new StringReader(js);
+    //     JsonReader jsR = Json.createReader(strR);
+    //     return create(jsR.readObject());
+    // }
+
+    // public JsonObject toJson(){
+    //     return Json.createObjectBuilder().add("title", this.title)
+    //         .add("author", author)
+    //         .add("description", description)
+    //         .add("contributor", contributor)
+    //         .add("publisher", publisher).build();
+    // }
 }
 
