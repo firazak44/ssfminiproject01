@@ -8,34 +8,32 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.vttp2022.ssfminiproject01.mvcmodels.Query;
 import com.vttp2022.ssfminiproject01.mvcmodels.Reviews;
+import com.vttp2022.ssfminiproject01.mvcmodels.User;
+import com.vttp2022.ssfminiproject01.mvcservice.RedisRepo;
 import com.vttp2022.ssfminiproject01.mvcservice.ReviewsSvc;
 
 @Controller
-// @RequestMapping(path="/reviews")
+@RequestMapping("/reviews")
 public class ReviewsCtrl {
     
     @Autowired
     ReviewsSvc reviewsSvc;
 
-    @GetMapping("/reviews")
+    @Autowired
+    RedisRepo redisrepo;
+    
+    @Autowired
+    User user;
+    
+    @GetMapping("/searchreviews")
     public String search(Model model,
-        @RequestParam int isbn,
-        @RequestParam String title,
-        @RequestParam String author){
-        Query q = new Query();
-        q.setIsbn(isbn);
-        q.setTitle(title);
-        q.setAuthor(author);
-        List<Reviews> rv = reviewsSvc.getReviews(q);
-        model.addAttribute("isbn", isbn);
+        @RequestParam (required = !true)String title,
+        @RequestParam (required = !true)String author){
         model.addAttribute("title", title);
         model.addAttribute("author", author);
-        model.addAttribute("results", rv);
-        return "indexsearchBR";
+        return "indexsearchlistBR";
     }
 
 }

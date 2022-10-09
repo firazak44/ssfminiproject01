@@ -1,4 +1,4 @@
-package com.vttp2022.ssfminiproject01.redisconfig;
+package com.vttp2022.ssfminiproject01.mvcservice;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.vttp2022.ssfminiproject01.mvcmodels.Results;
+import com.vttp2022.ssfminiproject01.mvcmodels.Lists;
 
 
 
@@ -29,14 +29,10 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private Optional<Integer> redisPort;
 
-    // @Value("${spring.redis.password}")
-    // private String redisPassword;
-    // private String redisPassword = System.getenv("REDIS_API_KEY");
-
     @Value("${spring.redis.database}")
     private String redisDatabase;
 
-    @Bean(name = "books")
+    @Bean
     @Scope("singleton")
     public RedisTemplate<String, Object> redisTemplate() {
         final RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
@@ -44,7 +40,7 @@ public class RedisConfig {
         config.setHostName(redisHost);
         config.setPort(redisPort.get());
         config.setPassword(redisPassword);
-        Jackson2JsonRedisSerializer jackson2JsonJsonSerializer = new Jackson2JsonRedisSerializer(Results.class);
+        Jackson2JsonRedisSerializer jackson2JsonJsonSerializer = new Jackson2JsonRedisSerializer(Lists.class);
 
         final JedisClientConfiguration jedisClient = JedisClientConfiguration.builder().build();
         final JedisConnectionFactory jedisFac = new JedisConnectionFactory(config, jedisClient);
@@ -55,8 +51,8 @@ public class RedisConfig {
         template.setConnectionFactory(jedisFac);
         template.setKeySerializer(new StringRedisSerializer());
         template.setValueSerializer(jackson2JsonJsonSerializer);
-        // template.setHashKeySerializer(template.getKeySerializer());
-        // template.setHashValueSerializer(template.getValueSerializer());
+        template.setHashKeySerializer(template.getKeySerializer());
+        template.setHashValueSerializer(template.getValueSerializer());
         return template;
     }
 }

@@ -23,23 +23,17 @@
     <div class="container">
         <div class="row mt-5">
             <div class="col">
-                <form method="GET" action="/reviews">
-                    <div class="input-group">
-                        <input type="text" name="isbn" id="isbn"
-                            class="form-control" required 
-                            placeholder="Enter ISBN">
-                        <br>
-                        <input type="text" name="title" id="title"
-                            class="form-control" required 
+                <form method="GET" th:action="@{/reviews/searchreviews}">
+                    <div class="input-group" type="text">
+                        <input type="text" name="title" 
+                            class="form-control" 
                             placeholder="Enter Title">
                         <br>
-                        <input type="text" name="author" id="author"
-                            class="form-control" required 
+                        <input type="text" name="author" 
+                            class="form-control"
                             placeholder="Enter Author">
-                        <button type="submit"
-                            class="btn btn-warning btn-lg">Search
-                        </button>
                     </div>
+                    <button type="submit" class="btn">Search</button>
                 </form>
             </div>
         </div>

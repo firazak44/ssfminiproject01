@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js" 
+        integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <title>Index Login</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Welcome to the Booklist Tracker </h1>
+                <form method="get" th:action="@{/index}" th:object="${User}">
+                    <h2>Login to your account</h2>
+                    <div class="form-outline">
+                        <input class="form-control" type="text" name="username" placeholder="Enter Username"/><br>
+                      </div>
+                    <button class="button" type="submit">Login</button>  
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

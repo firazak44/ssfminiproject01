@@ -7,33 +7,19 @@
     <title>Index Searchlist Book Review</title>
 </head>
 <body>
-    <div class="container">
+    <div class="container" method="GET" th:action="@{/reviews/searchreviews}">
         <div class="row">
             <div class="col">
                 <h1>Index Searchlist Book Review</h1>
             </div>
         </div>
         <label class="form-label">Results</label>
-        <div class="row">
-            <div class="col">
-                <span data-th-text="${isbn}">&nbsp;</span><p data-th-text="${results.isbn}"></p>
-            </div>
-        </div>
+        <span th:text="${title}">&nbsp;</span><p th:text="${Review.title}"></p>
+        <span th:text="${author}">&nbsp;</span><p th:text="${Review.author}"></p>
+        <span th:text="${isbn}">&nbsp;</span><p th:text="${reviews.isbn}"></p>
 
-        <div class="row">
-            <div class="col">
-                <span data-th-text="${title}">&nbsp;</span><p data-th-text="${results.title}"></p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <span data-th-text="${author}">&nbsp;</span><p data-th-text="${results.author}"></p>
-            </div>
-        </div>
-
-        <form method="GET" action="/">
-            <button type="submit" class="btn btn-warning btn-lg">Back</button>
+        <form method="POST" action="#">
+            <button type="submit" class="btn">Add to list</button>
         </form>
     </div>
 </body>

@@ -9,7 +9,6 @@ public class Reviews {
     private String copyright;
     private String numResults;
     private Resultsreviews[] resultsreviews;
-    private Query query;
 
     public String getStatus() {return status;}
     public void setStatus(String status) {this.status = status;}
@@ -19,8 +18,6 @@ public class Reviews {
     public void setNumResults(String numResults) {this.numResults = numResults;}
     public Resultsreviews[] getResults() {return resultsreviews;}
     public void setResults(Resultsreviews[] results) {this.resultsreviews = results;}
-    public Query getQuery() {return query;}
-    public void setQuery(Query query) {this.query = query;}
     
     public static Reviews createJson(JsonObject o) {
         Reviews rv = new Reviews();

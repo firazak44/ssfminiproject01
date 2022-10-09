@@ -8,13 +8,18 @@
         integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
-    <title>Document</title>
+    <title>Search Bestsellers Here!</title>
 </head>
 <body>
-    <div method="GET" action="/lists/names">
+    <div class="container" th:object="${user}">
         <div class="row">
             <div class="col">
-                <p text="${bknl}"></p>
+                    <h1> Search Bestsellers Here! </h1>
+                <form method="get" th:action="@{/lists/best-sellers}" th:object="${Lists}">
+                    <input type="text" name="title" class="form-control" placeholder="Enter Title"/><br>
+                    <input type="hidden" name="username" th:value="${username}">
+                    <button class="button" type="submit">Search</button>  
+                </form>
             </div>
         </div>
     </div>

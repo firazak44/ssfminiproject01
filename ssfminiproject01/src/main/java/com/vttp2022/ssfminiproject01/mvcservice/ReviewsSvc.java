@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.vttp2022.ssfminiproject01.mvcmodels.Query;
 import com.vttp2022.ssfminiproject01.mvcmodels.Reviews;
 
 import jakarta.json.Json;
@@ -40,11 +39,10 @@ public class ReviewsSvc {
         private void init(){hasKey = null != apiKey;
         logger.info(">>> API KEY set : "  + hasKey);}
 
-    public List<Reviews> getReviews(Query  q){
+    public List<Reviews> getReviews(){
         String nytrvURL = UriComponentsBuilder.fromUriString(URL)
-            .queryParam("isbn", q.getIsbn())
-            .queryParam("title", q.getTitle())
-            .queryParam("author", q.getAuthor())
+            .query("title=")
+            .query("author=")
             .queryParam("api-key", apiKey)
             .toUriString();
         logger.info(">>> Complete NYT URI API address  : "  + nytrvURL);

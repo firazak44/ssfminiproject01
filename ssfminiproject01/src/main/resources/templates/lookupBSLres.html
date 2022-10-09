@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.min.js" 
+        integrity="sha512-8Y8eGK92dzouwpROIppwr+0kPauu0qqtnzZZNEF8Pat5tuRNJxJXCkbQfJ0HlUG3y1HB3z18CSKmUo7i2zcPpg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+    <title>Bestsellers Search Results</title>
+</head>
+<body th:object="${user}">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Bestsellers Search Results for: <span th:text="${lookup}"></span></h1>
+            </div>
+            <div class="search-result" th:each="lists : ${lookup}">
+                <span th:text="${title}">&nbsp;</span><p th:text="${lists.title}"></p>
+                <span th:text="${author}">&nbsp;</span><p th:text="${lists.author}"></p>
+                <span th:text="${isbn}">&nbsp;</span><p th:text="${lists.isbn}"></p>
+            </div>
+        </div>
+        <form method="POST" action="#">
+            <input type="hidden" name="username" th:value="${username}">
+            <button type="submit" class="btn">Add to list</button>
+        </form>
+    </div>
+</body>
+</html>

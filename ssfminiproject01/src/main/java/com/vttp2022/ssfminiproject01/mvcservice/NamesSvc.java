@@ -45,10 +45,9 @@ public class NamesSvc {
 
         List<Names> topList = new ArrayList<>();
         
-        String URL = "https://api.nytimes.com/svc/books/v3/lists/names";
+        String URL = "https://api.nytimes.com/svc/books/v3/lists/names.json";
 
         String nytURL = UriComponentsBuilder.fromUriString(URL) //create URL with query
-            .queryParam("list")
             .queryParam("api-key", apiKey)
             .toUriString();
         logger.info(">>> Complete NYT URI API address  : "  + nytURL);
@@ -77,5 +76,6 @@ public class NamesSvc {
         }
         return topList.get(0);
     }
+
 }
 
